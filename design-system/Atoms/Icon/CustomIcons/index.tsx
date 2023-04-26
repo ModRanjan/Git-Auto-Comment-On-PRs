@@ -1,0 +1,9 @@
+export { default as DashboardIcon } from '/public/icons/DashboardIcon.svg';
+export { default as FolderIcon } from '/public/icons/FolderIcon.svg';
+export { default as CalenderIcon } from '/public/icons/CalenderIcon.svg';
+export { default as PeoplesIcon } from '/public/icons/icon-4.svg';
+export { default as AnalyticsIcon } from '/public/icons/icon-5.svg';
+export { default as SettingIcon } from '/public/icons/icon-6.svg';
+export { default as XIcon } from '/public/icons/icon-7.svg';
+export { default as Hamburger } from '/public/icons/Hamburger.svg';
+export { default as SettingGear } from '/public/icons/SettingGear.svg';
