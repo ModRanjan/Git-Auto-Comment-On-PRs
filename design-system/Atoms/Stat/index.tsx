@@ -4,7 +4,7 @@ import React from 'react';
 interface StatsPropsData {
   title: string;
   value: number;
-  bgcolor?: string;
+  bgcolor: string;
 }
 
 export const Stat = ({ title, value, bgcolor }: StatsPropsData) => {

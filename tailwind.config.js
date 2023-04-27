@@ -97,6 +97,7 @@ module.exports = {
       fontFamily: {
         Epilogue: ['Epilogue', ...defaultTheme.fontFamily.sans],
         Inter: ['Inter', ...defaultTheme.fontFamily.sans],
+        Kalam: ['Kalam', 'cursive'],
       },
       borderRadius: {
         '3px': '3px',

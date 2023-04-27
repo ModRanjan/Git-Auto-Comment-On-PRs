@@ -21,7 +21,7 @@ export const SidebarNavigation: SidebarNavItemType[] = [
     icon: FolderIcon,
     current: false,
   },
-  { name: 'Prs', href: '/prs', icon: CalenderIcon, current: false },
+  { name: 'PRs', href: '/prs', icon: CalenderIcon, current: false },
   { name: 'AI Guide', href: '/aiGuide', icon: PeoplesIcon, current: false },
   {
     name: 'Analytics',

@@ -7,3 +7,5 @@ export { default as SettingIcon } from '/public/icons/icon-6.svg';
 export { default as XIcon } from '/public/icons/icon-7.svg';
 export { default as Hamburger } from '/public/icons/Hamburger.svg';
 export { default as SettingGear } from '/public/icons/SettingGear.svg';
+export { default as LogOutIcon } from '/public/icons/LogOut.svg';
+export { default as GitHubIcon } from '/public/icons/github.svg';
