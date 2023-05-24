@@ -30,6 +30,7 @@ export default function Login() {
   const loginWithGithub = async () => {
     try {
       const res = await signInOrSignUp();
+      console.log('Login Response: ', res);
     } catch (error) {
       console.log('login error: ', error);
     }

@@ -11,7 +11,7 @@ import { Page } from '@/redux/user/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setCurrentPage, setPRStat } from '@/redux/user/userSlice';
 
-import { getPRStats } from '@/services/prs';
+import { getPROpen, getPRStats } from '@/services/prs';
 import { pageTitle } from '@/utils/GeneralFunctions';
 
 import { PRDataType } from '@/types/PRsData';
@@ -107,6 +107,15 @@ const Dashboard = () => {
     getStats();
   }, [totalPubRepos, dispatch]);
 
+  useEffect(() => {
+    const getOpenPRs = async () => {
+      const resp = await getPROpen();
+      console.log('getOpenPRs resp: ', resp);
+    };
+
+    getOpenPRs();
+  }, []);
+
   return (
     <div className="w-full min-h-screen py-5 bg-white">
       {/* Page Header */}
@@ -175,65 +184,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-{
-  /* <div className="flex items-center justify-between">
-  <h2 className="section-title">Commit Activity</h2>
-  <Menu as="div" className="relative">
-    <Menu.Button className="w-full inline-flex justify-center items-center px-4 py-1.5 text-xs font-normal text-gray-900 border-none bg-neutral-200 rounded-md hover:bg-neutral-200 focus:outline-none focus:ring-0 whitespace-nowrap font-inter">
-      Last 7 days
-      <Image
-        width={24}
-        height={24}
-        src="/icons/right-icon.svg"
-        alt="right-icon"
-        className="ml-2 -mr-1.5 h-[16px] w-[16px] text-neutral-900"
-        aria-hidden="true"
-      />
-    </Menu.Button>
-    <Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-      <div className="py-1">
-        <Menu.Item>
-          {({ active }) => (
-            <a
-              href="#"
-              className={classNames(
-                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-sm',
-              )}
-            >
-              Name
-            </a>
-          )}
-        </Menu.Item>
-        <Menu.Item>
-          {({ active }) => (
-            <a
-              href="#"
-              className={classNames(
-                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-sm',
-              )}
-            >
-              Date modified
-            </a>
-          )}
-        </Menu.Item>
-        <Menu.Item>
-          {({ active }) => (
-            <a
-              href="#"
-              className={classNames(
-                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-sm',
-              )}
-            >
-              Date created
-            </a>
-          )}
-        </Menu.Item>
-      </div>
-    </Menu.Items>
-  </Menu>
-</div>; */
-}

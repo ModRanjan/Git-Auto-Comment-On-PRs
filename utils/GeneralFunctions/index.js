@@ -16,6 +16,26 @@ export function setLocalStorage(key, value) {
   return window.localStorage.setItem(key, JSON.stringify(value));
 }
 
+export function getPastDate(days) {
+  const today = new Date();
+  const pastDate = new Date(today.getTime() - days * 24 * 60 * 60 * 1000);
+  return [today, pastDate];
+}
+
+export function getPastDates(days) {
+  const pastDates = [];
+  const today = new Date();
+
+  for (let i = days - 1; i >= 0; i--) {
+    const pastDate = new Date();
+    pastDate.setDate(today.getDate() - i);
+
+    pastDates.push(pastDate.toString().slice(0, 10));
+  }
+
+  return pastDates;
+}
+
 export function timeDifference(time) {
   const currentTime = new Date().getTime();
   let timestampDifference = new Date(time - currentTime);

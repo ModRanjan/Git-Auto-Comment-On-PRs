@@ -6,6 +6,18 @@ const basdeUrl = process.env.NEXT_PUBLIC_AXIOSBASE_URL;
 const instance = axios.create({
   baseURL: basdeUrl,
 });
+instance.interceptors.request.use(
+  (config) => {
+    const accessToken = window.localStorage.getItem('jwtToken');
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 instance.interceptors.request.use(
   (config) => {

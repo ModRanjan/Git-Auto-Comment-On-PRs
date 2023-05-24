@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Sidebar from '../Sidebar';
 import { getJWTToken } from '@/services/authentication';
+import { useAppSelector } from '@/redux/hooks';
 
 interface BaseLayoutProps {
   children: ReactNode;
@@ -15,6 +16,8 @@ const UnAuthenticated_Route = ['/', '/login'];
 
 const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
   const Router = useRouter();
+  const hasUser = useAppSelector((state) => state.user);
+
   useEffect(() => {
     const { code } = Router.query;
 
@@ -24,12 +27,13 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
         const { status, data } = response;
         if (status == 200) {
           const jwt = data.data;
-          console.log('jwt: ', jwt);
+
           window.localStorage.setItem('jwtToken', jwt);
         } else throw new Error('failed to get authentication token');
       } catch (error) {
         console.log(error);
-        toast.error('set token error');
+        console.log('set token error: ', error);
+        // toast.error('set token error');
       }
     };
 
@@ -38,12 +42,16 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
     }
   }, [Router.query]);
 
+  useEffect(() => {
+    if (!hasUser) Router.push('/');
+  }, [hasUser, Router]);
+
   return (
     <>
       <Head>
         <title>Git-PRs</title>
         <meta name="description" content="" />
-        <link rel="icon" href="/eventr.ico" />
+        <link rel="icon" href="/GitAI.ico" />
       </Head>
 
       {UnAuthenticated_Route.includes(Router.asPath) ? (

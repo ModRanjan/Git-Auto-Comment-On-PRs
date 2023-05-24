@@ -3,6 +3,7 @@ import { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
 import { toast } from 'react-toastify';
 import { getCommitData } from '@/services/commits';
+import { getPastDate, getPastDates } from '@/utils/GeneralFunctions';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -13,7 +14,8 @@ interface CommitChartProps {
 }
 
 const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
-  const [series, setSeries] = useState<number[]>([0, 2, 3, 1, 4, 0, 3]);
+  const [series, setSeries] = useState([0, 0, 0, 0, 0, 0, 0]);
+  // [1, 2, 3, 1, 4, 0, 3]
 
   const [option, setOption] = useState<ApexOptions>({
     chart: {
@@ -23,6 +25,16 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
       zoom: {
         enabled: false,
       },
+      toolbar: {
+        show: true,
+        tools: {
+          download: true,
+          selection: true,
+        },
+      },
+    },
+    markers: {
+      size: 4,
     },
     stroke: {
       width: 2,
@@ -31,22 +43,14 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
     dataLabels: {
       enabled: false,
     },
-    legend: {
-      show: true,
-      showForSingleSeries: true,
-      position: 'top',
-      fontSize: '16px',
-      fontFamily: 'Inter, sans-serif',
-      fontWeight: 400,
-    },
     xaxis: {
-      type: 'category',
-      categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       position: 'bottom',
+      tickPlacement: 'on',
+      categories: getPastDates(7),
       labels: {
+        // format: 'dd MMM',
         show: true,
         showDuplicates: false,
-        rotate: 20,
         style: {
           colors: '#9095a0',
           fontSize: '14px',
@@ -56,14 +60,44 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
         },
       },
     },
-    // yaxis: {
-    //   show: false,
-    // },
-    grid: {
-      // padding: {
-      //   left: 16,
-      //   right: 4,
-      // },
+    plotOptions: {
+      bar: {
+        columnWidth: '20%',
+      },
+    },
+    yaxis: {
+      // min: 0,
+      // max: 10,
+      floating: false,
+      logarithmic: true,
+      axisTicks: {
+        show: true,
+      },
+      axisBorder: {
+        show: false,
+        color: '#247BA0',
+      },
+      labels: {
+        style: {
+          colors: '#262626',
+        },
+      },
+      title: {
+        text: 'Number of Commits',
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Inter, Arial, sans-serif',
+          fontWeight: 600,
+          color: '#1091f4',
+        },
+      },
+    },
+    legend: {
+      show: true,
+      position: 'top',
+      fontSize: '16px',
+      fontFamily: 'Inter, sans-serif',
+      fontWeight: 400,
     },
     title: {
       text: 'Commit Activity',
@@ -82,58 +116,37 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
     const getCommitGraphData = async () => {
       const XAxisData: any[] = [];
       const seriesData: number[] = [];
+      const [today, pastDate] = getPastDate(7);
 
       try {
-        const response = await getCommitData(startDate, endDate);
+        // const response = await getCommiata(startDate, endDate);
+        const response = await getCommitData(today, pastDate);
         const { status, data } = response;
 
         if (status == 200) {
           const CommitsData = data.data;
 
-          CommitsData.map((commitData: any) => {
-            XAxisData.push(
-              new Date(commitData.commitDate).toString().slice(0, 4),
-            );
-            seriesData.push(commitData.commitCount);
-          });
+          if (CommitsData.length > 0) {
+            CommitsData.map((commitData: any) => {
+              XAxisData.push(
+                new Date(commitData.commitDate).toString().slice(0, 10),
+              );
+              seriesData.push(commitData.commitCount);
+            });
 
-          console.log(`XAxisData: ${XAxisData}
-                    chartData: ${seriesData}`);
+            console.log(`XAxisData: ${XAxisData} chartData: ${seriesData}`);
 
-          const Options: ApexOptions = {
-            ...option,
-            xaxis: {
-              type: 'category',
-              categories: XAxisData,
-              position: 'bottom',
-              // max: 7,
-              // min: 7,
-              labels: {
-                show: true,
-                showDuplicates: false,
-                rotate: 20,
-                style: {
-                  colors: '#9095a0',
-                  fontSize: '14px',
-                  fontFamily: 'Inter, Arial, sans-serif',
-                  fontWeight: 600,
-                  cssClass: 'apexcharts-xaxis-label',
-                },
+            const Options: ApexOptions = {
+              ...option,
+              xaxis: {
+                ...option.xaxis,
+                categories: XAxisData,
               },
-            },
-            // yaxis: {
-            //   show: false,
-            // },
-            // grid: {
-            // padding: {
-            //   left: 16,
-            //   right: 4,
-            // },
-            // },
-          };
+            };
 
-          setOption(Options);
-          setSeries(seriesData);
+            setOption(Options);
+            setSeries(seriesData);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -141,7 +154,7 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
       }
     };
     getCommitGraphData();
-  }, []);
+  }, [option]);
 
   return (
     <ReactApexChart
