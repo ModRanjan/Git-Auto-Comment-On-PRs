@@ -154,8 +154,9 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
         toast.error('get commit data failed');
       }
     };
+
     getCommitGraphData();
-  }, [option]);
+  }, []);
 
   return (
     <ReactApexChart
