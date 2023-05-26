@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { Page } from './types';
 import { UserType } from '@/types/User';
-import { PRDataType } from '@/types/PRsData';
+import { PRStatDataType } from '@/types/PRsData';
 
 export interface UserState {
   user: UserType | null;
   totalRepos: number;
-  PRStatData: PRDataType;
+  PRStatData: PRStatDataType;
   currentPage: Page;
 }
 
@@ -31,7 +31,7 @@ const userSlice = createSlice({
     setTotalRepos: (state, action: PayloadAction<number>) => {
       state.totalRepos = action.payload;
     },
-    setPRStat: (state, action: PayloadAction<PRDataType>) => {
+    setPRStat: (state, action: PayloadAction<PRStatDataType>) => {
       state.PRStatData = action.payload;
     },
     setCurrentPage: (state, action: PayloadAction<Page>) => {

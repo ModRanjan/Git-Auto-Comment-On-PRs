@@ -4,10 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
+import { AiOutlineLogout } from 'react-icons/ai';
 import { Dialog, Transition } from '@headlessui/react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
-import { LogOutIcon, XIcon } from '@/Atoms/Icon/CustomIcons';
+import { XIcon } from '@/Atoms/Icon/CustomIcons';
 import { SidebarNavigation } from '@/utils/config/SidebarNavigation';
 
 import { useAppDispatch } from '@/redux/hooks';
@@ -160,8 +161,8 @@ const Sidebar = () => {
                     onClick={logOut}
                     className="border-none rounded shadow-sm outline-none "
                   >
-                    <LogOutIcon
-                      className="w-8 h-8 rotate-180 border-none outline-none text-neutral-100"
+                    <AiOutlineLogout
+                      className="border-none outline-none w-7 h-7 text-neutral-100"
                       stroke={'#9095a0'}
                       fill={'#9095a0'}
                     />
@@ -346,7 +347,11 @@ const SideBarMobile = ({
                         onClick={logOutHandler}
                         className="text-xl rounded shadow-sm "
                       >
-                        <LogOutIcon className="w-8 h-8 rotate-180 text-neutral-700" />
+                        <AiOutlineLogout
+                          className="border-none outline-none w-7 h-7 text-neutral-100"
+                          stroke={'#9095a0'}
+                          fill={'#9095a0'}
+                        />
                       </button>
 
                       <span className="absolute p-2 text-xs text-white scale-0 bg-gray-800 rounded -right-14 top-10 group-hover:scale-100">

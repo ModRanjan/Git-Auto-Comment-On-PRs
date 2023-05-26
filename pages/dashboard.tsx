@@ -14,43 +14,30 @@ import { setCurrentPage, setPRStat } from '@/redux/user/userSlice';
 import { getPROpen, getPRStats } from '@/services/prs';
 import { pageTitle } from '@/utils/GeneralFunctions';
 
-import { PRDataType } from '@/types/PRsData';
+import { PRStatDataType } from '@/types/PRsData';
 import { StatisticsType } from '@/types/Statistics';
-
-const activityItems = [
-  {
-    avtarUrl: '/profiles/G1.jpg',
-    project: 'Kathryn Murphy',
-    commit: '2d89f0c8',
-    environment: 'production',
-    time: '1h',
-  },
-  {
-    avtarUrl: '/profiles/G1.jpg',
-    project: 'Kathryn Murphy',
-    commit: '2d89f0c8',
-    environment: 'production',
-    time: '1h',
-  },
-  {
-    avtarUrl: '/profiles/G1.jpg',
-    project: 'Kathryn Murphy',
-    commit: '2d89f0c8',
-    environment: 'production',
-    time: '1h',
-  },
-  {
-    avtarUrl: '/profiles/G1.jpg',
-    project: 'Kathryn Murphy',
-    commit: '2d89f0c8',
-    environment: 'production',
-    time: '1h',
-  },
-];
+import { ActivityFeedType } from '@/types/ActivityFeed';
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const [prStatData, setPrStatData] = useState<StatisticsType[]>([]);
+  const [PRsData, setPRsData] = useState<ActivityFeedType[]>([]);
+  const [prStatData, setPrStatData] = useState<StatisticsType[]>([
+    {
+      title: 'Repositories',
+      value: 0,
+      bgcolor: 'bg-secondary-200/30',
+    },
+    {
+      title: 'Total PRs',
+      value: 0,
+      bgcolor: 'bg-[#c1c3ca]/30',
+    },
+    {
+      title: 'Opened PRs',
+      value: 0,
+      bgcolor: 'bg-[#cbc5c1]/30',
+    },
+  ]);
 
   const totalPubRepos = useAppSelector((state) => state.user.totalRepos);
 
@@ -73,7 +60,7 @@ const Dashboard = () => {
         if (status == 200) {
           const PRData = data.data;
 
-          const ReqPrData: PRDataType = {
+          const ReqPrData: PRStatDataType = {
             totalPRs: PRData.totalPRs,
             totalOpenPRs: PRData.totalOpenPRs,
           };
@@ -109,8 +96,41 @@ const Dashboard = () => {
 
   useEffect(() => {
     const getOpenPRs = async () => {
-      const resp = await getPROpen();
-      console.log('getOpenPRs resp: ', resp);
+      try {
+        const response = await getPROpen();
+        const { status, data } = response;
+
+        if (status == 200) {
+          const OpenedPRData = data.data;
+          const PRData: ActivityFeedType[] = [];
+
+          OpenedPRData.map((PR: any) => {
+            const ReqPrData: ActivityFeedType = {
+              repoId: PR.repoId,
+              repoTitle: PR.base.repo.name,
+              PRId: PR.id,
+              PRTitle: PR.raw_data.title,
+              html_url: PR.raw_data.html_url,
+              changed_files: PR.raw_data.changed_files,
+              status: PR.state,
+              from_branch: PR.raw_data.head.ref,
+              to_branch: PR.base.ref,
+              numberOfPRs: PR.number,
+              numberOfCommits: PR.raw_data.commits,
+              user_avatar: PR.raw_data.user.avatar_url,
+              userId: PR.raw_data.user.id,
+            };
+
+            PRData.push(ReqPrData);
+          });
+
+          console.log('PRData: ', PRData);
+          setPRsData(PRData);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error('get Opened PRs error!');
+      }
     };
 
     getOpenPRs();
@@ -176,7 +196,7 @@ const Dashboard = () => {
 
         {/* Activity feed */}
         <aside className="w-full col-span-4">
-          <ActivityFeed ActivityData={activityItems} />
+          <ActivityFeed ActivityData={PRsData} />
         </aside>
       </div>
     </div>

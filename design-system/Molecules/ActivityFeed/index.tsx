@@ -21,12 +21,14 @@ const ActivityFeed: FC<ActivityFeedProps> = ({ ActivityData }) => {
           >
             {ActivityData.map((item, index) => (
               <Card
-                key={item.commit + index}
-                imgSrc={item.avtarUrl}
+                key={item.repoTitle + index}
+                imgSrc={item.user_avatar}
                 iHeight="h-11"
                 iWidth="w-11"
-                title={item.project}
-                subTitle="company@Example.com"
+                title={item.PRTitle}
+                subTitle={item.repoTitle}
+                numberOfCommits={item.numberOfCommits}
+                status={item.status}
               />
             ))}
           </ul>
