@@ -122,6 +122,7 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
         // const response = await getCommiata(startDate, endDate);
         const response = await getCommitData(today, pastDate);
         const { status, data } = response;
+        console.log('getCommitData response: ', response);
 
         if (status == 200) {
           const CommitsData = data.data;

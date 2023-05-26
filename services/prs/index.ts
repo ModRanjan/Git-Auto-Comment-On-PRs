@@ -11,9 +11,18 @@ const getPRStats = async (): Promise<AxiosResponse<any>> => {
   }
 };
 
-const getPROpen = async (): Promise<AxiosResponse<any>> => {
+const getOpenedPR = async (): Promise<AxiosResponse<any>> => {
   try {
     const response = await axios.get('/pr/open');
+
+    return response;
+  } catch (error: any) {
+    return error;
+  }
+};
+const getAllPR = async (): Promise<AxiosResponse<any>> => {
+  try {
+    const response = await axios.get('/pr');
 
     return response;
   } catch (error: any) {
@@ -31,4 +40,4 @@ const getPRHandle = async (): Promise<AxiosResponse<any>> => {
   }
 };
 
-export { getPRStats, getPROpen, getPRHandle };
+export { getPRStats, getOpenedPR, getAllPR, getPRHandle };

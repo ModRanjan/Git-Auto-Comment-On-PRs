@@ -24,7 +24,7 @@ const Repositories = ({}) => {
 
       dispatch(setCurrentPage(currentPageTitle));
     }
-  }, [dispatch]);
+  }, []);
 
   const getRepos = useCallback(async () => {
     try {

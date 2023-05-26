@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { getPROpen } from '@/services/prs';
+import { getAllPR } from '@/services/prs';
 import { ActivityFeedType } from '@/types/ActivityFeed';
 import { useAppDispatch } from '@/redux/hooks';
 import { Page } from '@/redux/user/types';
@@ -21,20 +21,20 @@ const OpenPRs = () => {
 
       dispatch(setCurrentPage(currentPageTitle));
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     const getOpenPRs = async () => {
       try {
-        const response = await getPROpen();
+        const response = await getAllPR();
         const { status, data } = response;
 
         if (status == 200) {
           const OpenedPRData = data.data;
-          console.log('OpenedPRData response: ', OpenedPRData);
+          console.log('AllPRData response: ', OpenedPRData.allPRs);
           const PRData: ActivityFeedType[] = [];
 
-          OpenedPRData.map((PR: any) => {
+          OpenedPRData.allPRs.map((PR: any) => {
             const ReqPrData: ActivityFeedType = {
               repoId: PR.repoId,
               repoTitle: PR.base.repo.name,
@@ -54,12 +54,11 @@ const OpenPRs = () => {
             PRData.push(ReqPrData);
           });
 
-          console.log('PRData: ', PRData);
           setPRsData(PRData);
         }
       } catch (error) {
         console.log(error);
-        toast.error('get Opened PRs error!');
+        toast.error('get AllPRs error!');
       }
     };
 

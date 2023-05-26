@@ -11,7 +11,7 @@ import { Page } from '@/redux/user/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setCurrentPage, setPRStat } from '@/redux/user/userSlice';
 
-import { getPROpen, getPRStats } from '@/services/prs';
+import { getOpenedPR, getPRStats } from '@/services/prs';
 import { pageTitle } from '@/utils/GeneralFunctions';
 
 import { PRStatDataType } from '@/types/PRsData';
@@ -97,11 +97,12 @@ const Dashboard = () => {
   useEffect(() => {
     const getOpenPRs = async () => {
       try {
-        const response = await getPROpen();
+        const response = await getOpenedPR();
         const { status, data } = response;
 
         if (status == 200) {
           const OpenedPRData = data.data;
+          console.log('getPrOpen response: ', OpenedPRData);
           const PRData: ActivityFeedType[] = [];
 
           OpenedPRData.map((PR: any) => {

@@ -72,9 +72,7 @@ const PRs: FC<PRsProps> = ({
       </div>
 
       <div className="flex items-center justify-end ml-auto gap-x-6">
-        <label className="text-base text-neutral-700 md:whitespace-nowrap">
-          Auto Comment
-        </label>
+        <label className="text-base text-neutral-700 md:whitespace-nowrap"></label>
         <Button
           variant={'primary'}
           size={'slim'}
