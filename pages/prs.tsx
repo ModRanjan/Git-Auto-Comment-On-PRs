@@ -72,7 +72,7 @@ const OpenPRs = () => {
         <h1 className="text-2xl page-title">Pull Requests</h1>
 
         <p className="-mt-2 text-base text-neutral-550">
-          Dolor sunt non qui adiptsicing mollit add
+          Elevate your collaboration and code quality with Pull Requests
         </p>
       </div>
 

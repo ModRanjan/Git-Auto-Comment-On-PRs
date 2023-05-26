@@ -3,6 +3,7 @@ import { BsCheckCircle } from 'react-icons/bs';
 import Link from 'next/link';
 import Image from 'next/image';
 import classNames from 'classnames';
+import { BiGitPullRequest, BiGitRepoForked } from 'react-icons/bi';
 
 interface CardProps {
   imgSrc?: string;
@@ -12,6 +13,7 @@ interface CardProps {
   subTitle?: string;
   numberOfCommits: number;
   status: boolean;
+  html_url: string;
 }
 
 export const Card: FC<CardProps> = ({
@@ -22,10 +24,11 @@ export const Card: FC<CardProps> = ({
   subTitle,
   numberOfCommits,
   status,
+  html_url,
 }) => {
   return (
     <li className="block w-full px-2 py-4 border rounded-lg cursor-pointer bg-neutral-200 border-neutral-200">
-      <Link passHref href="#" legacyBehavior>
+      <Link passHref href={html_url} legacyBehavior>
         <a className="flex-shrink-0 block w-full group">
           <div className="flex items-center space-x-2">
             {imgSrc ? (
@@ -60,28 +63,22 @@ export const Card: FC<CardProps> = ({
             )}
 
             <div className="flex-1 font-Inter">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center gap-x-1">
                 <h2 className="card-title">{title}</h2>
 
-                {/* <BsCheckCircle
-                  className={`w-4 h-4  text-green-500 ${
-                    status ? 'inline-block' : 'hidden'
-                  }`}
-                  title="PR-Status"
-                /> */}
+                <span className="inline-flex items-center rounded-full bg-[#DD7815] px-2.5 py-0.5 text-xs font-medium text-white ml-auto gap-x-1">
+                  <BiGitPullRequest
+                    className={`w-4 h-4 ${status ? 'inline-block' : 'hidden'}`}
+                    title="PR-Status"
+                  />
+                  Open
+                </span>
               </div>
 
-              <p className="text-xs font-light text-neutral-600">
-                repo: {subTitle}
-              </p>
-            </div>
-            <div className="flex items-center justify-between">
-              <BsCheckCircle
-                className={`w-4 h-4  text-green-500 ${
-                  status ? 'inline-block' : 'hidden'
-                }`}
-                title="PR-Status"
-              />
+              <div className="flex font-light gap-x-1 text-neutral-600">
+                <BiGitRepoForked className="w-4 h-4" />
+                <p className="text-xs ">repo: {subTitle}</p>
+              </div>
             </div>
           </div>
         </a>

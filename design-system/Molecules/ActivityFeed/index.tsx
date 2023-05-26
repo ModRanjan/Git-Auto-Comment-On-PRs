@@ -19,18 +19,25 @@ const ActivityFeed: FC<ActivityFeedProps> = ({ ActivityData }) => {
             role="list"
             className="flex flex-col overflow-y-auto gap-y-3 scroll-smooth"
           >
-            {ActivityData.map((item, index) => (
-              <Card
-                key={item.repoTitle + index}
-                imgSrc={item.user_avatar}
-                iHeight="h-11"
-                iWidth="w-11"
-                title={item.PRTitle}
-                subTitle={item.repoTitle}
-                numberOfCommits={item.numberOfCommits}
-                status={item.status}
-              />
-            ))}
+            {ActivityData.length ? (
+              ActivityData.map((item, index) => (
+                <Card
+                  key={item.repoTitle + index}
+                  imgSrc={item.user_avatar}
+                  iHeight="h-11"
+                  iWidth="w-11"
+                  title={item.PRTitle}
+                  subTitle={item.repoTitle}
+                  numberOfCommits={item.numberOfCommits}
+                  status={item.status}
+                  html_url={item.html_url}
+                />
+              ))
+            ) : (
+              <h3 className="py-10 text-base text-center rounded-lg text-neutral-500 font-Inter px-auto bg-[#ddd9e6]/40">
+                Sorry! No Activity to Show.
+              </h3>
+            )}
           </ul>
         </div>
       </div>

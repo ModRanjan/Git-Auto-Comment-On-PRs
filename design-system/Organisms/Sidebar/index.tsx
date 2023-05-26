@@ -48,6 +48,7 @@ const Sidebar = () => {
           setUserData(user);
           dispatch(setUser(user));
           dispatch(setTotalRepos(totalRepos));
+          console.log('object');
         }
       } catch (error) {
         console.log(error);

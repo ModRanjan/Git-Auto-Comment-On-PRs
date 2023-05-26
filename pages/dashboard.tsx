@@ -139,10 +139,9 @@ const Dashboard = () => {
   return (
     <div className="w-full min-h-screen py-5 bg-white">
       {/* Page Header */}
-      <div className="flex items-center justify-between px-4 ">
+      <div className="flex items-center justify-between px-4">
         <h1 className="page-title">Dashboard</h1>
 
-        {/* Action buttons */}
         <div className="flex items-center gap-x-2">
           <Button
             onClick={() => console.log('Create new project')}
@@ -169,7 +168,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-12">
+      <div className="grid grid-cols-1 mt-6 sm:grid-cols-12">
         <div className="col-span-8 py-3 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-6">
           {/* Repo. Stats */}
           <div className="mx-auto mt-4 space-y-6 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-5">
