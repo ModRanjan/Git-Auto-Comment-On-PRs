@@ -46,7 +46,7 @@ const PRs: FC<PRsProps> = ({
               />
             </>
           ) : (
-            <div></div>
+            <div className=""></div>
           )}
         </div>
 
@@ -55,7 +55,7 @@ const PRs: FC<PRsProps> = ({
             <h3 className="card-title">{PRTitle}</h3>
 
             <span
-              className={`inline-flex text-white items-center rounded-full px-2 py-[1px] text-xs font-medium  ${
+              className={`hidden md:inline-flex  text-white items-center rounded-full px-2 py-[1px] text-xs font-medium  ${
                 status ? 'bg-orange-500 ' : 'bg-neutral-700'
               }`}
               title="PR-Status"
@@ -66,6 +66,13 @@ const PRs: FC<PRsProps> = ({
               />
               {status ? 'open' : 'close'}
             </span>
+
+            <Icon
+              icon={status ? BiGitPullRequest : TbGitPullRequestClosed}
+              className={`inline-block md:hidden w-[14px] h-[14px] mr-1 text-white ${
+                status ? 'bg-orange-500 ' : 'bg-neutral-700'
+              }`}
+            />
           </div>
 
           <p className="mt-1 text-sm text-neutral-550">
@@ -80,7 +87,7 @@ const PRs: FC<PRsProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-x-1">
+        <div className="flex flex-col items-center md:flex-row gap-x-1">
           <p className="text-sm text-neutral-550">
             <FiGitCommit className="inline-block w-5 h-5 mr-2" />
             Commits
