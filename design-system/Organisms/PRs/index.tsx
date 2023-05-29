@@ -69,7 +69,7 @@ const PRs: FC<PRsProps> = ({
 
             <Icon
               icon={status ? BiGitPullRequest : TbGitPullRequestClosed}
-              className={`inline-block md:hidden w-[14px] h-[14px] mr-1 text-white ${
+              className={`inline-block md:hidden w-[14px] h-[14px] mr-1 text-white rounded-full p-1 ${
                 status ? 'bg-orange-500 ' : 'bg-neutral-700'
               }`}
             />
@@ -91,8 +91,8 @@ const PRs: FC<PRsProps> = ({
           className="flex flex-col items-center md:flex-row gap-x-1"
           title={`No. of Commits: ${numberOfCommits}`}
         >
-          <p className="text-sm text-neutral-550">
-            <FiGitCommit className="inline-block w-5 h-5 mr-2" />
+          <p className="text-sm text-neutral-550 md:space-x-1">
+            <FiGitCommit className="inline-block w-5 h-5" />
             <span className="hidden md:inline-block">Commits</span>
           </p>
           <span
@@ -106,8 +106,6 @@ const PRs: FC<PRsProps> = ({
       </div>
 
       <div className="flex items-center justify-end px-5 ml-auto gap-x-6">
-        <label className="text-base text-neutral-700 md:whitespace-nowrap"></label>
-
         <Link href={html_url} target="_blank">
           <span className="px-3 py-2 text-sm font-normal text-white border border-current rounded-md bg-primary-500 hover:bg-primary-550 active:bg-primary-600 font-Inter">
             View
