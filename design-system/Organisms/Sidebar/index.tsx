@@ -308,7 +308,7 @@ const SideBarMobile = ({
                         <a
                           className={classNames(
                             'group flex items-center px-4 py-2 gap-x-2 text-sm rounded-md justify-start whitespace-nowrap',
-                            item.current
+                            active
                               ? 'bg-primary-500 hover:bg-primary-200 hover:text-neutral-700 text-white font-semibold'
                               : 'text-neutral-600 hover:bg-primary-200 hover:text-neutral-700',
                           )}
@@ -343,8 +343,14 @@ const SideBarMobile = ({
                     <div className="flex-1">
                       <h2 className="card-title">{userData?.name}</h2>
 
-                      <p className="text-xs font-light text-neutral-600">
-                        {userData?.email || userData?.bio || userData?.userName}
+                      <p
+                        className={`${
+                          userData?.name
+                            ? 'text-xs font-light text-neutral-600'
+                            : 'card-title'
+                        }`}
+                      >
+                        {userData?.email || userData?.userName}
                       </p>
                     </div>
 
