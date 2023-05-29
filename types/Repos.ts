@@ -7,5 +7,5 @@ export type ReposType = {
   commit?: string;
   time?: Date;
   repoURL: string;
-  isHookExists: boolean;
+  autoComment: boolean;
 };

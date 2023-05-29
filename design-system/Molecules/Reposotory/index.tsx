@@ -14,7 +14,7 @@ export const Repository: FC<RepositoryProps> = ({
   RepoData,
   onClickHandler,
 }) => {
-  const [enabled, setEnabled] = useState(RepoData.isHookExists);
+  const [enabled, setEnabled] = useState(RepoData.autoComment);
 
   const ToggleHandler = () => {
     if (!enabled) onClickHandler();

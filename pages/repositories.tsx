@@ -45,7 +45,7 @@ const Repositories = ({}) => {
               branch: tempRepo.default_branch,
               description: tempRepo.description,
               repoURL: tempRepo.raw_data.html_url,
-              isHookExists: tempRepo.isHookExists,
+              autoComment: tempRepo.autoComment,
             };
 
             Repos.push(repo);
@@ -67,7 +67,7 @@ const Repositories = ({}) => {
       const repoId = id;
 
       if (repoId) {
-        const response = await getPRHandle(repoId);
+        const response = await addComments(repoId);
 
         const { status, data } = response;
         if (status == 200) {

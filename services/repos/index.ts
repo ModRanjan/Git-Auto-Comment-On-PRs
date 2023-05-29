@@ -11,17 +11,13 @@ const getRepositories = async (): Promise<AxiosResponse<any>> => {
   }
 };
 
-const addComments = async (id: number): Promise<AxiosResponse<any>> => {
-  const repoId = id;
+const addComments = async (repoId: number): Promise<AxiosResponse<any>> => {
   try {
-    const response = await axios.post(
-      '/repo/hook',
-      {},
-      {
-        headers: { repoId },
-      },
-    );
+    const response = await axios.post('/repo/handle/comment', {
+      Headers: { repoid: repoId },
+    });
 
+    console.log('/repo/handle/comment (addComments): ', response);
     return response;
   } catch (error: any) {
     return error;
