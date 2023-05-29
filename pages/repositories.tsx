@@ -11,6 +11,7 @@ import { pageTitle } from '@/utils/GeneralFunctions';
 
 import { setCurrentPage } from '@/redux/user/userSlice';
 import { useAppDispatch } from '@/redux/hooks';
+import { getPRHandle } from '@/services/prs';
 
 const Repositories = ({}) => {
   const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ const Repositories = ({}) => {
 
       if (status == 200) {
         const tempRepos = data.data;
-        console.log('tempRepos: ', tempRepos);
+
         {
           tempRepos.map((tempRepo: any) => {
             const repo: ReposType = {
@@ -53,7 +54,6 @@ const Repositories = ({}) => {
         setAllRepos(Repos);
       } else throw new Error('failed to get repos');
     } catch (error) {
-      console.log(error);
       toast.error('get repos error');
     }
   }, []);
@@ -67,8 +67,7 @@ const Repositories = ({}) => {
       const repoId = id;
 
       if (repoId) {
-        const response = await addComments(repoId);
-        console.log('comments:', response);
+        const response = await getPRHandle(repoId);
 
         const { status, data } = response;
         if (status == 200) {
@@ -76,7 +75,6 @@ const Repositories = ({}) => {
         }
       }
     } catch (error) {
-      console.log(error);
       toast.error('failed to add comments, try after sometime!');
     }
   };

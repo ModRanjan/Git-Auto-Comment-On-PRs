@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import { RiGitPullRequestFill } from 'react-icons/ri';
+import { TbGitPullRequestClosed } from 'react-icons/tb';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/design-system/Atoms/Button';
 import { BiGitPullRequest } from 'react-icons/bi';
+import { FiGitCommit } from 'react-icons/fi';
 import { Icon } from '@/design-system/Atoms/Icon';
 
 interface PRsProps {
@@ -28,19 +29,20 @@ const PRs: FC<PRsProps> = ({
   to_branch,
   html_url,
   status,
+  numberOfCommits,
 }) => {
   return (
     <div className="flex justify-between h-20 pt-2 pb-4 text-sm border-b border-neutral-300">
       <div className="flex items-center w-full gap-x-4">
-        <div className="w-10 h-10 text-white rounded-full bg-info-600">
+        <div className="w-12 h-12 text-white rounded-full bg-info-600">
           {user_avatar ? (
             <>
               <Image
                 className="rounded-full"
                 src={user_avatar}
                 alt={'user_name'}
-                width="42"
-                height="42"
+                width="46"
+                height="46"
               />
             </>
           ) : (
@@ -49,29 +51,51 @@ const PRs: FC<PRsProps> = ({
         </div>
 
         <div className="flex-1 w-full">
-          <h3 className="card-title">
-            <span className="">{PRTitle}</span>
+          <div className="flex items-center gap-x-2">
+            <h3 className="card-title">{PRTitle}</h3>
+
             <span
-              className="inline-flex items-center rounded-full bg-[#DD7815] px-2 py-[0.5px] text-[9px] font-medium text-white ml-2"
+              className={`inline-flex text-white items-center rounded-full px-2 py-[1px] text-xs font-medium  ${
+                status ? 'bg-orange-500 ' : 'bg-neutral-700'
+              }`}
               title="PR-Status"
             >
               <Icon
-                icon={status ? BiGitPullRequest : RiGitPullRequestFill}
-                className={`w-3 h-3 mr-1`}
+                icon={status ? BiGitPullRequest : TbGitPullRequestClosed}
+                className={`w-[14px] h-[14px] mr-1`}
               />
-              Open
+              {status ? 'open' : 'close'}
             </span>
-          </h3>
+          </div>
 
-          <p className="text-sm text-neutral-550">
-            Branch: {from_branch}{' '}
+          <p className="mt-1 text-sm text-neutral-550">
+            Branch:{' '}
+            <span className="bg-[#DDF4FE] text-[#3B6BDA] px-2 py-[0.5px]">
+              {to_branch}
+            </span>
             <BsArrowLeftShort className="inline-block w-6 h-6" />
-            {to_branch}
+            <span className="bg-[#DDF4FE] text-[#3B6BDA] px-2 py-[0.5px]">
+              {from_branch}
+            </span>
           </p>
+        </div>
+
+        <div className="flex items-center gap-x-1">
+          <p className="text-sm text-neutral-550">
+            <FiGitCommit className="inline-block w-5 h-5 mr-2" />
+            Commits
+          </p>
+          <span
+            className={
+              'rounded-full px-1 py-[1px] bg-[#c1c3ca]/30 text-neutral-600'
+            }
+          >
+            {numberOfCommits}
+          </span>
         </div>
       </div>
 
-      <div className="flex items-center justify-end ml-auto gap-x-6">
+      <div className="flex items-center justify-end px-5 ml-auto gap-x-6">
         <label className="text-base text-neutral-700 md:whitespace-nowrap"></label>
         <Button
           variant={'primary'}
@@ -80,11 +104,9 @@ const PRs: FC<PRsProps> = ({
           type="button"
         >
           <Link href={html_url} target="_blank">
-            View
+            <span className="text-sm font-normal font-Inter">View</span>
           </Link>
         </Button>
-
-        {/* <ToggleButton enabled={enabled} setEnabled={ToggleHandler} /> */}
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ export function getPastDates(days) {
     const pastDate = new Date();
     pastDate.setDate(today.getDate() - i);
 
-    pastDates.push(pastDate.toString().slice(0, 10));
+    pastDates.push(pastDate.toString().slice(0, 3));
   }
 
   return pastDates;

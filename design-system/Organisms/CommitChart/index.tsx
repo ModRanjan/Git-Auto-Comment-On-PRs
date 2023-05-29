@@ -119,10 +119,8 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
       const [today, pastDate] = getPastDate(7);
 
       try {
-        // const response = await getCommiata(startDate, endDate);
-        const response = await getCommitData(today, pastDate);
+        const response = await getCommitData(pastDate, today);
         const { status, data } = response;
-        console.log('getCommitData response: ', response);
 
         if (status == 200) {
           const CommitsData = data.data;
@@ -130,12 +128,10 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
           if (CommitsData.length > 0) {
             CommitsData.map((commitData: any) => {
               XAxisData.push(
-                new Date(commitData.commitDate).toString().slice(0, 10),
+                new Date(commitData.commitDate).toString().slice(0, 3),
               );
               seriesData.push(commitData.commitCount);
             });
-
-            console.log(`XAxisData: ${XAxisData} chartData: ${seriesData}`);
 
             const Options: ApexOptions = {
               ...option,

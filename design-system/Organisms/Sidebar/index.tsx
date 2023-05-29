@@ -48,10 +48,8 @@ const Sidebar = () => {
           setUserData(user);
           dispatch(setUser(user));
           dispatch(setTotalRepos(totalRepos));
-          console.log('object');
         }
       } catch (error) {
-        console.log(error);
         toast.error(`getting user's Detail failed`);
       }
     };
@@ -64,7 +62,6 @@ const Sidebar = () => {
   };
 
   const logOut = () => {
-    console.log('object');
     Router.push('/');
   };
 

@@ -102,7 +102,7 @@ const Dashboard = () => {
 
         if (status == 200) {
           const OpenedPRData = data.data;
-          console.log('getPrOpen response: ', OpenedPRData);
+
           const PRData: ActivityFeedType[] = [];
 
           OpenedPRData.map((PR: any) => {
@@ -125,11 +125,9 @@ const Dashboard = () => {
             PRData.push(ReqPrData);
           });
 
-          console.log('PRData: ', PRData);
           setPRsData(PRData);
         }
       } catch (error) {
-        console.log(error);
         toast.error('get Opened PRs error!');
       }
     };

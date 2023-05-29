@@ -14,7 +14,7 @@ const getPRStats = async (): Promise<AxiosResponse<any>> => {
 const getOpenedPR = async (): Promise<AxiosResponse<any>> => {
   try {
     const response = await axios.get('/pr/open');
-
+    console.log('/pr/open response:', response);
     return response;
   } catch (error: any) {
     return error;
@@ -23,14 +23,14 @@ const getOpenedPR = async (): Promise<AxiosResponse<any>> => {
 const getAllPR = async (): Promise<AxiosResponse<any>> => {
   try {
     const response = await axios.get('/pr');
-
+    console.log('/pr response:', response);
     return response;
   } catch (error: any) {
     return error;
   }
 };
 
-const getPRHandle = async (): Promise<AxiosResponse<any>> => {
+const getPRHandle = async (repoId: number): Promise<AxiosResponse<any>> => {
   try {
     const response = await axios.post('/pr/handle');
 

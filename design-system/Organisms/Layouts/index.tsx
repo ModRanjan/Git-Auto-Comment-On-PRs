@@ -23,13 +23,19 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
 
     const setJWT = async (code: string) => {
       try {
-        const response = await getJWTToken(code);
-        const { status, data } = response;
-        if (status == 200) {
-          const jwt = data.data;
+        console.log(
+          'getItem from localstorage: ',
+          window.localStorage.getItem('jwtToken'),
+        );
+        if (window.localStorage.getItem('jwtToken')) {
+          const response = await getJWTToken(code);
+          const { status, data } = response;
+          if (status == 200) {
+            const jwt = data.data;
 
-          window.localStorage.setItem('jwtToken', jwt);
-        } else throw new Error('failed to get authentication token');
+            window.localStorage.setItem('jwtToken', jwt);
+          } else throw new Error('failed to get authentication token');
+        }
       } catch (error) {
         console.log(error);
         console.log('set token error: ', error);

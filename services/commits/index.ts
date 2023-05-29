@@ -7,11 +7,15 @@ const getCommitData = async (
 ): Promise<AxiosResponse<any>> => {
   try {
     const tempStartDate = startDate.toISOString();
-    const tempSndDate = endDate.toISOString();
+    const tempEndDate = endDate.toISOString();
+
+    console.log(`startDate: ${tempStartDate}, endDate: ${tempEndDate}`);
+
     const response = await axios.get('/commits', {
-      headers: { startDate: tempStartDate, endDate: tempSndDate },
+      headers: { startDate: tempStartDate, endDate: tempEndDate },
     });
 
+    console.log('/commits response: ', response);
     return response;
   } catch (error: any) {
     return error;
