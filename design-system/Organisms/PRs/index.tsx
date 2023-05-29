@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { TbGitPullRequestClosed } from 'react-icons/tb';
 import Image from 'next/image';
@@ -7,6 +7,8 @@ import { Button } from '@/design-system/Atoms/Button';
 import { BiGitPullRequest } from 'react-icons/bi';
 import { FiGitCommit } from 'react-icons/fi';
 import { Icon } from '@/design-system/Atoms/Icon';
+import { ToggleButton } from '@/design-system/Atoms/Button/ToggleButton';
+import { getPRHandle } from '@/services/prs';
 
 interface PRsProps {
   repoTitle: string;
@@ -20,9 +22,12 @@ interface PRsProps {
   numberOfPRs: number;
   numberOfCommits: number;
   user_avatar: string;
+  autoComment: boolean;
 }
 
 const PRs: FC<PRsProps> = ({
+  PRId,
+  autoComment,
   PRTitle,
   user_avatar,
   from_branch,
@@ -31,6 +36,14 @@ const PRs: FC<PRsProps> = ({
   status,
   numberOfCommits,
 }) => {
+  const [enabled, setEnabled] = useState(autoComment);
+
+  const ToggleHandler = (PRId: number) => {
+    if (!enabled) getPRHandle(PRId);
+
+    setEnabled(!enabled);
+  };
+
   return (
     <div className="flex justify-between h-20 pt-2 pb-4 text-sm border-b border-neutral-300">
       <div className="flex items-center w-full gap-x-4">
@@ -103,6 +116,17 @@ const PRs: FC<PRsProps> = ({
             {numberOfCommits}
           </span>
         </div>
+      </div>
+
+      <div className="flex items-center justify-end ml-auto gap-x-6">
+        <label className="text-base text-neutral-700 md:whitespace-nowrap">
+          Auto Comment
+        </label>
+
+        <ToggleButton
+          enabled={enabled}
+          setEnabled={() => ToggleHandler(PRId)}
+        />
       </div>
 
       <div className="flex items-center justify-end px-5 ml-auto gap-x-6">

@@ -30,10 +30,10 @@ const getAllPR = async (): Promise<AxiosResponse<any>> => {
   }
 };
 
-const getPRHandle = async (repoId: number): Promise<AxiosResponse<any>> => {
+const getPRHandle = async (id: number): Promise<AxiosResponse<any>> => {
   try {
     const response = await axios.post('/pr/handle', {
-      Headers: { repoid: repoId },
+      Headers: { id: id },
     });
 
     console.log('/pr/handle (getPRHandle): ', response);

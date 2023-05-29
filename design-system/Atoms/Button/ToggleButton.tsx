@@ -8,9 +8,7 @@ export const ToggleButton: FC<ToggleButtonType> = ({ enabled, setEnabled }) => {
   return (
     <button
       type="button"
-      className={`relative inline-flex items-center mr-5  ${
-        enabled ? 'cursor-not-allowed' : 'cursor-pointer'
-      }`}
+      className={`relative inline-flex items-center mr-5 cursor-pointer`}
     >
       <input
         type="checkbox"

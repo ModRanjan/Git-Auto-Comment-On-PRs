@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { getAllPR } from '@/services/prs';
-import { ActivityFeedType } from '@/types/ActivityFeed';
+import { PRsDataType } from '@/types/PRsData';
 import { useAppDispatch } from '@/redux/hooks';
 import { Page } from '@/redux/user/types';
 import { pageTitle } from '@/utils/GeneralFunctions';
@@ -11,7 +11,7 @@ import PRs from '@/Organisms/PRs';
 
 const OpenPRs = () => {
   const dispatch = useAppDispatch();
-  const [PRsData, setPRsData] = useState<ActivityFeedType[]>([]);
+  const [PRsData, setPRsData] = useState<PRsDataType[]>([]);
 
   useEffect(() => {
     if (document) {
@@ -31,10 +31,11 @@ const OpenPRs = () => {
 
         if (status == 200) {
           const OpenedPRData = data.data;
-          const PRData: ActivityFeedType[] = [];
+          const PRData: PRsDataType[] = [];
 
           OpenedPRData.allPRs.map((PR: any) => {
-            const ReqPrData: ActivityFeedType = {
+            const ReqPrData: PRsDataType = {
+              autoComment: PR.autocomment,
               repoId: PR.repoId,
               repoTitle: PR.base.repo.name,
               PRId: PR.id,
@@ -79,6 +80,7 @@ const OpenPRs = () => {
           return (
             <PRs
               key={PR.PRId}
+              autoComment={true}
               repoTitle={PR.repoTitle}
               PRId={PR.PRId}
               PRTitle={PR.PRTitle}
