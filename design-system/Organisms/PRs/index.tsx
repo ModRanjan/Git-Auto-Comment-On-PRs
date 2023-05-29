@@ -76,7 +76,7 @@ const PRs: FC<PRsProps> = ({
           </div>
 
           <p className="mt-1 text-sm text-neutral-550">
-            Branch:{' '}
+            <span className="hidden md:inline-block">Branch: </span>{' '}
             <span className="bg-[#DDF4FE] text-[#3B6BDA] px-2 py-[0.5px]">
               {to_branch}
             </span>
@@ -87,10 +87,13 @@ const PRs: FC<PRsProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-col items-center md:flex-row gap-x-1">
+        <div
+          className="flex flex-col items-center md:flex-row gap-x-1"
+          title={`No. of Commits: ${numberOfCommits}`}
+        >
           <p className="text-sm text-neutral-550">
             <FiGitCommit className="inline-block w-5 h-5 mr-2" />
-            Commits
+            <span className="hidden md:inline-block">Commits</span>
           </p>
           <span
             className={
@@ -104,16 +107,12 @@ const PRs: FC<PRsProps> = ({
 
       <div className="flex items-center justify-end px-5 ml-auto gap-x-6">
         <label className="text-base text-neutral-700 md:whitespace-nowrap"></label>
-        <Button
-          variant={'primary'}
-          size={'slim'}
-          className="rounded-lg"
-          type="button"
-        >
-          <Link href={html_url} target="_blank">
-            <span className="text-sm font-normal font-Inter">View</span>
-          </Link>
-        </Button>
+
+        <Link href={html_url} target="_blank">
+          <span className="px-3 py-2 text-sm font-normal text-white border border-current rounded-md bg-primary-500 hover:bg-primary-550 active:bg-primary-600 font-Inter">
+            View
+          </span>
+        </Link>
       </div>
     </div>
   );
