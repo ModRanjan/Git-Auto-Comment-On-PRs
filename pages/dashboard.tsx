@@ -86,7 +86,6 @@ const Dashboard = () => {
           setPrStatData(stat);
         }
       } catch (error) {
-        console.log(error);
         toast.error('get repository stats error!');
       }
     };
@@ -143,7 +142,7 @@ const Dashboard = () => {
 
         <div className="flex items-center gap-x-2">
           <Button
-            onClick={() => console.log('Create new project')}
+            onClick={() => toast.warning('under-maintinace')}
             type="button"
             size={'slim'}
             className={`px-5 font-medium rounded-4px focus:outline-none focus:ring-0 focus:ring-offset-2`}
@@ -155,7 +154,7 @@ const Dashboard = () => {
           </Button>
 
           <Button
-            onClick={() => console.log('Share')}
+            onClick={() => toast.warning('under-maintinace')}
             type="button"
             variant={'primary'}
             size={'slim'}

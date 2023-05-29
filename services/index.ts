@@ -9,26 +9,9 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     const accessToken = window.localStorage.getItem('jwtToken');
-    console.log('JWT: ', accessToken);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
-
-instance.interceptors.request.use(
-  (config) => {
-    const accessToken = window.localStorage.getItem('jwtToken');
-
-    // console.log(accessToken?.slice(1, accessToken.length - 1));
-    const JWT_Token = 'Bearer ' + accessToken;
-    if (config.headers && accessToken) {
-      config.headers.Authorization = JWT_Token;
     }
     return config;
   },

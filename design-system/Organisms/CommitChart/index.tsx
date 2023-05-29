@@ -66,8 +66,6 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
       },
     },
     yaxis: {
-      // min: 0,
-      // max: 10,
       floating: false,
       logarithmic: true,
       axisTicks: {
@@ -146,8 +144,7 @@ const CommitChart: FC<CommitChartProps> = ({ startDate, endDate }) => {
           }
         }
       } catch (error) {
-        console.log(error);
-        toast.error('get commit data failed');
+        toast.error('getCommit data failed');
       }
     };
 

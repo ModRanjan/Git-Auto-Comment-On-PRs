@@ -62,6 +62,8 @@ const Sidebar = () => {
   };
 
   const logOut = () => {
+    const jwt = '';
+    // window.localStorage.setItem('jwtToken', jwt);
     Router.push('/');
   };
 
@@ -149,8 +151,14 @@ const Sidebar = () => {
                 <div className="flex-1">
                   <h2 className="card-title">{userData?.name}</h2>
 
-                  <p className="text-xs font-light text-neutral-600">
-                    {userData?.email || userData?.bio || userData?.userName}
+                  <p
+                    className={`${
+                      userData?.name
+                        ? 'text-xs font-light text-neutral-600'
+                        : 'card-title'
+                    }`}
+                  >
+                    {userData?.email || userData?.userName}
                   </p>
                 </div>
 
@@ -159,11 +167,7 @@ const Sidebar = () => {
                     onClick={logOut}
                     className="border-none rounded shadow-sm outline-none "
                   >
-                    <AiOutlineLogout
-                      className="border-none outline-none w-7 h-7 text-neutral-100"
-                      stroke={'#9095a0'}
-                      fill={'#9095a0'}
-                    />
+                    <AiOutlineLogout className="border-none outline-none w-7 h-7 text-neutral-100" />
                   </button>
 
                   <span className="absolute top-0 p-2 text-xs text-white scale-0 bg-gray-800 rounded -right-16 group-hover:scale-100">

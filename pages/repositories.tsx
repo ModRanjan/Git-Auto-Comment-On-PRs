@@ -86,7 +86,7 @@ const Repositories = ({}) => {
         <h1 className="text-2xl page-title">Repositories</h1>
 
         <p className="-mt-1 text-base text-neutral-550">
-          Dolor sunt non qui adiptsicing mollit add
+          Efficient code management and collaboration with Repositories.
         </p>
       </div>
 

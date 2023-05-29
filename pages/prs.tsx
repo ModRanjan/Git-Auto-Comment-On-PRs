@@ -31,7 +31,6 @@ const OpenPRs = () => {
 
         if (status == 200) {
           const OpenedPRData = data.data;
-          console.log('AllPRData response: ', OpenedPRData.allPRs);
           const PRData: ActivityFeedType[] = [];
 
           OpenedPRData.allPRs.map((PR: any) => {
@@ -57,8 +56,7 @@ const OpenPRs = () => {
           setPRsData(PRData);
         }
       } catch (error) {
-        console.log(error);
-        toast.error('get AllPRs error!');
+        toast.error('Get PRs Error!');
       }
     };
 

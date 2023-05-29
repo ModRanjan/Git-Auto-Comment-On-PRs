@@ -20,30 +20,25 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
 
   useEffect(() => {
     const { code } = Router.query;
+    // console.log('Router.query: ', Router.query);
+    const localStorage = window.localStorage.getItem('jwtToken');
 
     const setJWT = async (code: string) => {
       try {
-        console.log(
-          'getItem from localstorage: ',
-          window.localStorage.getItem('jwtToken'),
-        );
-        if (window.localStorage.getItem('jwtToken')) {
-          const response = await getJWTToken(code);
-          const { status, data } = response;
-          if (status == 200) {
-            const jwt = data.data;
+        const response = await getJWTToken(code);
+        const { status, data } = response;
 
-            window.localStorage.setItem('jwtToken', jwt);
-          } else throw new Error('failed to get authentication token');
-        }
+        if (status == 200) {
+          const jwt = data.data;
+
+          window.localStorage.setItem('jwtToken', jwt);
+        } else throw new Error('failed to get authentication token');
       } catch (error) {
-        console.log(error);
-        console.log('set token error: ', error);
-        // toast.error('set token error');
+        toast.error('set token error');
       }
     };
 
-    if (code != undefined && typeof code === 'string') {
+    if (!localStorage && code != undefined && typeof code === 'string') {
       setJWT(code);
     }
   }, [Router.query]);
