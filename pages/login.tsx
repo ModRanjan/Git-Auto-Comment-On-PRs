@@ -62,9 +62,10 @@ export default function Login() {
       }
     };
 
-    if (!localStorage && code != undefined && typeof code === 'string') {
-      console.log('Router: ', Router);
-      setJWT(code);
+    if (code != undefined && typeof code === 'string') {
+      if (!localStorage) {
+        setJWT(code);
+      } else Router.push('/dashboard');
     }
   }, [Router]);
 
