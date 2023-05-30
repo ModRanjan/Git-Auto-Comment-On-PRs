@@ -32,9 +32,11 @@ const getAllPR = async (): Promise<AxiosResponse<any>> => {
 
 const getPRHandle = async (id: number): Promise<AxiosResponse<any>> => {
   try {
-    const response = await axios.post('/pr/handle', {
-      Headers: { id: id },
-    });
+    const response = await axios.post(
+      '/pr/handle',
+      {},
+      { headers: { id: id } },
+    );
 
     console.log('/pr/handle (getPRHandle): ', response);
     return response;
