@@ -20,7 +20,11 @@ import { SidebarNavItemType } from '@/types/SidebarNavigation';
 import { InternalLogo } from '@/design-system/Molecules/Logo';
 import { Button } from '@/design-system/Atoms/Button';
 
-const Sidebar = () => {
+type SidebarProps = {
+  logOutHandler: () => void;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ logOutHandler }) => {
   const Router = useRouter();
   const dispatch = useAppDispatch();
   const [userData, setUserData] = useState<UserType>();
@@ -61,12 +65,6 @@ const Sidebar = () => {
     setSidebarOpen(false);
   };
 
-  const logOut = () => {
-    const jwt = '';
-    window.localStorage.setItem('jwtToken', jwt);
-    Router.push('/');
-  };
-
   return (
     <div>
       <SideBarMobile
@@ -74,7 +72,7 @@ const Sidebar = () => {
         closeHandler={SidebarCloseHandler}
         SidebarNavigation={SidebarNavigation}
         userData={userData}
-        logOutHandler={logOut}
+        logOutHandler={logOutHandler}
       />
 
       {/* Static sidebar for desktop */}
@@ -164,7 +162,7 @@ const Sidebar = () => {
 
                 <div className="relative flex justify-center -mr-2 group">
                   <button
-                    onClick={logOut}
+                    onClick={logOutHandler}
                     className="border-none rounded shadow-sm outline-none "
                   >
                     <AiOutlineLogout

@@ -35,7 +35,7 @@ const OpenPRs = () => {
 
           OpenedPRData.allPRs.map((PR: any) => {
             const ReqPrData: PRsDataType = {
-              autoComment: PR.autocomment,
+              autoComment: PR.autoComment,
               repoId: PR.repoId,
               repoTitle: PR.base.repo.name,
               PRId: PR.id,
@@ -66,7 +66,7 @@ const OpenPRs = () => {
   return (
     <div className="w-full min-h-screen py-5 bg-white">
       {/* page header */}
-      <div className="flex flex-col items-start justify-between px-4">
+      <div className="flex flex-col items-start justify-between px-3 md:px-4">
         <h1 className="text-2xl page-title">Pull Requests</h1>
 
         <p className="-mt-2 text-base text-neutral-550">
@@ -75,12 +75,13 @@ const OpenPRs = () => {
       </div>
 
       {/* PRs */}
-      <div className="px-5 mt-10">
+      <div className="px-3 mt-10 md:px-4">
         {PRsData.map((PR) => {
+          console.log('PR.autoComment: ', PR);
           return (
             <PRs
               key={PR.PRId}
-              autoComment={true}
+              autoComment={PR.autoComment}
               repoTitle={PR.repoTitle}
               PRId={PR.PRId}
               PRTitle={PR.PRTitle}

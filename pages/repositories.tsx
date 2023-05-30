@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 
 import { Repository } from '@/Molecules/Reposotory';
 
@@ -11,7 +10,6 @@ import { pageTitle } from '@/utils/GeneralFunctions';
 
 import { setCurrentPage } from '@/redux/user/userSlice';
 import { useAppDispatch } from '@/redux/hooks';
-import { getPRHandle } from '@/services/prs';
 
 const Repositories = ({}) => {
   const dispatch = useAppDispatch();
@@ -62,10 +60,8 @@ const Repositories = ({}) => {
     getRepos();
   }, [getRepos]);
 
-  const startCommenting = async (id: number) => {
+  const startCommenting = async (repoId: number) => {
     try {
-      const repoId = id;
-
       if (repoId) {
         const response = await addComments(repoId);
 
@@ -92,17 +88,22 @@ const Repositories = ({}) => {
 
       {/* Repository */}
       <div className="px-5 mt-10">
-        {AllRepos &&
-          AllRepos.map((repo, index) => {
-            const onClickHandler = () => {
-              startCommenting(repo.id);
-            };
-            return (
-              <div key={index} className="block w-full space-y-4">
-                <Repository RepoData={repo} onClickHandler={onClickHandler} />
-              </div>
-            );
-          })}
+        <div className="block w-full space-y-4">
+          {AllRepos &&
+            AllRepos.map((repo, index) => {
+              return (
+                <Repository
+                  key={index}
+                  repoId={repo.id}
+                  repoURL={repo.repoURL}
+                  projectName={repo.projectName}
+                  branch={repo.branch}
+                  autoComment={repo.autoComment}
+                  onClickHandler={startCommenting}
+                />
+              );
+            })}
+        </div>
       </div>
     </div>
   );

@@ -6,20 +6,28 @@ import { ReposType } from '@/types/Repos';
 import Link from 'next/link';
 
 interface RepositoryProps {
-  RepoData: ReposType;
-  onClickHandler: () => void;
+  repoId: number;
+  repoURL: string;
+  projectName: string;
+  branch: string;
+  autoComment: boolean;
+  onClickHandler: (repoId: number) => void;
 }
 
 export const Repository: FC<RepositoryProps> = ({
-  RepoData,
+  repoId,
+  repoURL,
+  projectName,
+  branch,
+  autoComment,
   onClickHandler,
 }) => {
-  const [enabled, setEnabled] = useState(RepoData.autoComment);
+  const [toggle, setToggle] = useState<boolean>(autoComment);
 
-  const ToggleHandler = () => {
-    if (!enabled) onClickHandler();
+  const ToggleButtonHandler = (repoId: number) => {
+    onClickHandler(repoId);
 
-    setEnabled(!enabled);
+    setToggle((prev) => !prev);
   };
 
   return (
@@ -29,23 +37,24 @@ export const Repository: FC<RepositoryProps> = ({
 
         <div className="flex-1 w-full">
           <h3 className="card-title hover:text-primary-550 hover:underline">
-            <Link href={RepoData.repoURL} target="_blank">
-              {RepoData.projectName}
+            <Link href={repoURL} target="_blank">
+              {projectName}
             </Link>
           </h3>
 
-          <p className="text-sm text-neutral-550">
-            default branch: {RepoData.branch}
-          </p>
+          <p className="text-sm text-neutral-550">default branch: {branch}</p>
         </div>
       </div>
 
-      <div className="flex items-center justify-end ml-auto gap-x-6">
-        <label className="text-base text-neutral-700 md:whitespace-nowrap">
+      <div className="flex flex-col items-center justify-center ml-auto gap-y-1 md:justify-end md:flex-row gap-x-6">
+        <label className="text-xs md:text-base text-neutral-700 whitespace-nowrap">
           Auto Comment
         </label>
 
-        <ToggleButton enabled={enabled} setEnabled={ToggleHandler} />
+        <ToggleButton
+          enabled={toggle}
+          setEnabled={() => ToggleButtonHandler(repoId)}
+        />
       </div>
     </div>
   );
