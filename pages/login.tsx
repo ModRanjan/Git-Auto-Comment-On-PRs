@@ -13,9 +13,12 @@ import { useAppDispatch } from '@/redux/hooks';
 import { setCurrentPage } from '@/redux/user/userSlice';
 
 import { pageTitle } from '@/utils/GeneralFunctions';
-import { signInOrSignUp } from '@/services/authentication';
+import { getJWTToken, signInOrSignUp } from '@/services/authentication';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+  const Router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -29,12 +32,41 @@ export default function Login() {
 
   const loginWithGithub = async () => {
     try {
-      const res = await signInOrSignUp();
-      console.log('Login Response: ', res);
-    } catch (error) {
+      await signInOrSignUp();
+    } catch (error: any) {
       console.log('login error: ', error);
+      toast.error(error);
     }
   };
+
+  useEffect(() => {
+    const { code } = Router.query;
+
+    const localStorage = window.localStorage.getItem('jwtToken');
+    console.log('localStorage: ', localStorage);
+
+    const setJWT = async (code: string) => {
+      try {
+        const response = await getJWTToken(code);
+        const { status, data } = response;
+
+        if (status == 200) {
+          const jwt = data.data;
+
+          window.localStorage.setItem('jwtToken', jwt);
+
+          Router.push('/dashboard');
+        } else throw new Error('failed to get authentication token');
+      } catch (error) {
+        toast.error('set token error');
+      }
+    };
+
+    if (!localStorage && code != undefined && typeof code === 'string') {
+      console.log('Router: ', Router);
+      setJWT(code);
+    }
+  }, [Router]);
 
   return (
     <div className="relative h-screen overflow-hidden bg-secondary-300">
